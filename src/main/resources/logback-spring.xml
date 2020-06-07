@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property resource="application.yml"/>
+
+    <property name="PATTERN"
+              value="%white(%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}) %highlight(%-5level) %blue(%X{x-trace-id}) %blue(%X{X-B3-TraceId}) %blue(%X{X-B3-SpanId}) [%green(%t)] %yellow(%logger{20})::%magenta(%L): - %msg%n"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>
+            <Pattern>
+                ${PATTERN}
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <!-- TODO: Look into Async appenders for efficiency. -->
+        <!--        <appender-ref ref="FILE"/>-->
+        <appender-ref ref="STDOUT"/>
+        <!--        <appender-ref ref="SENTRY"/>-->
+    </root>
+
+    <!-- LOG at TRACE level -->
+    <logger name="theatre: " level="trace" additivity="false">
+        <!--        <appender-ref ref="FILE"/>-->
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+
+</configuration>
